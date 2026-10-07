@@ -1,0 +1,207 @@
+﻿@{
+    ViewData["Title"] = "Student Dashboard";
+
+    var upcomingEvents = ViewBag.UpcomingEvents
+        as IEnumerable<EventManagementSystem.Models.Event>;
+
+    var registeredEvents = ViewBag.RegisteredEvents
+        as IEnumerable<EventManagementSystem.Models.EventRegistration>;
+}
+
+<div class="container mt-4">
+
+    <h1>Student Dashboard</h1>
+
+    <div class="mb-4">
+    <a asp-controller="Student"
+       asp-action="ParticipatedEvents"
+       class="btn btn-primary">
+        My Participated Events
+    </a>
+    </div>
+
+    <p class="text-muted">
+        Welcome, @User.Identity?.Name
+    </p>
+
+    <hr />
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+
+        <div class="col-md-6 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Total Registrations
+                    </h5>
+
+                    <h2>
+                        @ViewBag.TotalRegistrations
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Upcoming Registrations
+                    </h5>
+
+                    <h2>
+                        @ViewBag.UpcomingRegistrations
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Upcoming Events -->
+    <div class="card mb-4">
+
+        <div class="card-header">
+            <h4 class="mb-0">Upcoming Events</h4>
+        </div>
+
+        <div class="card-body">
+
+            @if (upcomingEvents != null && upcomingEvents.Any())
+            {
+                <div class="row">
+
+                    @foreach (var item in upcomingEvents)
+                    {
+                        <div class="col-md-6 col-lg-4 mb-3">
+
+                            <div class="card h-100">
+
+                                <div class="card-body">
+
+                                    <h5 class="card-title">
+                                        @item.Name
+                                    </h5>
+
+                                    <p>
+                                        <strong>Date:</strong>
+                                        @item.Date.ToString("dd-MM-yyyy")
+                                    </p>
+
+                                    <p>
+                                        <strong>Time:</strong>
+                                        @item.Time.ToString(@"hh\:mm")
+                                    </p>
+
+                                    <p>
+                                        <strong>Venue:</strong>
+                                        @item.Venue
+                                    </p>
+
+                                    <a asp-controller="Events"
+                                       asp-action="Details"
+                                       asp-route-id="@item.EventId"
+                                       class="btn btn-primary">
+                                        View Details
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">
+                    No upcoming events available.
+                </p>
+            }
+
+        </div>
+
+    </div>
+
+
+    <!-- My Upcoming Registrations -->
+    <div class="card mb-4">
+
+        <div class="card-header">
+            <h4 class="mb-0">My Upcoming Registrations</h4>
+        </div>
+
+        <div class="card-body">
+
+            @if (registeredEvents != null && registeredEvents.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-bordered">
+
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Venue</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var registration in registeredEvents)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @registration.Event.Name
+                                    </td>
+
+                                    <td>
+                                        @registration.Event.Date.ToString("dd-MM-yyyy")
+                                    </td>
+
+                                    <td>
+                                        @registration.Event.Time.ToString(@"hh\:mm")
+                                    </td>
+
+                                    <td>
+                                        @registration.Event.Venue
+                                    </td>
+
+                                    <td>
+                                        <a asp-controller="Events"
+                                           asp-action="Details"
+                                           asp-route-id="@registration.EventId"
+                                           class="btn btn-sm btn-primary">
+                                            View
+                                        </a>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <p class="text-muted">
+                    You have not registered for any upcoming events.
+                </p>
+            }
+
+        </div>
+
+    </div>
+
+</div>

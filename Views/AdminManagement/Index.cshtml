@@ -1,0 +1,87 @@
+﻿@model IEnumerable<EventManagementSystem.Data.ApplicationUser>
+
+@{
+    ViewData["Title"] = "Manage Admins";
+}
+
+@if (TempData["AdminCreatedMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["AdminCreatedMessage"]
+    </div>
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1>Manage Admins</h1>
+            <p class="text-muted">
+                View and manage administrator accounts.
+            </p>
+        </div>
+
+        <a asp-controller="Admin"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Dashboard
+        </a>
+    </div>
+
+    <div class="mb-3">
+        <a asp-controller="AdminManagement"
+           asp-action="Create"
+           class="btn btn-primary">
+            + Add New Admin
+        </a>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card">
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var admin in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @(admin.UserName ?? "N/A")
+                                    </td>
+
+                                    <td>
+                                        @(admin.Email ?? "N/A")
+                                    </td>
+
+                                    <td>
+                                        @(admin.PhoneNumber ?? "N/A")
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            No Admin accounts found.
+        </div>
+    }
+
+</div>

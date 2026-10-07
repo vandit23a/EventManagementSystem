@@ -1,0 +1,110 @@
+﻿@model EventManagementSystem.Models.Event
+
+@{
+    ViewData["Title"] = "Create Event";
+}
+
+<div class="container mt-4">
+    <h1>Create Event</h1>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Create" method="post">
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger"></div>
+
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Description" class="form-label"></label>
+                    <textarea asp-for="Description"
+                              class="form-control"
+                              rows="4"></textarea>
+                    <span asp-validation-for="Description"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Category" class="form-label"></label>
+                    <select asp-for="Category" class="form-select">
+                        <option value="">-- Select Category --</option>
+                        <option value="Technical">Technical</option>
+                        <option value="Cultural">Cultural</option>
+                        <option value="Sports">Sports</option>
+                        <option value="Workshop">Workshop</option>
+                        <option value="Seminar">Seminar</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span asp-validation-for="Category"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Date" class="form-label"></label>
+                    <input asp-for="Date"
+                           type="date"
+                           class="form-control" />
+                    <span asp-validation-for="Date"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Time" class="form-label"></label>
+                    <input asp-for="Time"
+                           type="time"
+                           class="form-control" />
+                    <span asp-validation-for="Time"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Venue" class="form-label"></label>
+                    <input asp-for="Venue"
+                           class="form-control" />
+                    <span asp-validation-for="Venue"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="MaxParticipants"
+                           class="form-label">
+                    </label>
+
+                    <input asp-for="MaxParticipants"
+                           type="number"
+                           min="1"
+                           class="form-control" />
+
+                    <span asp-validation-for="MaxParticipants"
+                          class="text-danger"></span>
+                </div>
+
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Create Event
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+                    Back to Events
+                </a>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,98 @@
+﻿@model IEnumerable<EventManagementSystem.Models.EventRegistration>
+
+@{
+    ViewData["Title"] = "My Participated Events";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h1>My Participated Events</h1>
+
+            <p class="text-muted">
+                Events you have already participated in.
+            </p>
+        </div>
+
+        <a asp-controller="Student"
+           asp-action="Index"
+           class="btn btn-secondary">
+            Dashboard
+        </a>
+
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="card">
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Category</th>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Venue</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var registration in Model)
+                            {
+                                <tr>
+
+                                    <td>
+                                        @registration.Event.Name
+                                    </td>
+
+                                    <td>
+                                        @registration.Event.Category
+                                    </td>
+
+                                    <td>
+                                        @registration.Event.Date.ToString("dd-MM-yyyy")
+                                    </td>
+
+                                    <td>
+                                        @registration.Event.Time.ToString(@"hh\:mm")
+                                    </td>
+
+                                    <td>
+                                        @registration.Event.Venue
+                                    </td>
+
+                                    <td>
+                                        @registration.Event.Status
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            You have not participated in any past events yet.
+        </div>
+    }
+
+</div>
